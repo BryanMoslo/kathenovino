@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/gobuffalo/suite"
-	"github.com/icrowley/fake"
 )
 
 type AbsenceSuite struct {
@@ -18,7 +17,7 @@ func (abs *AbsenceSuite) Test_Create_Absence() {
 	
 	form := url.Values{
 		"Date":   []string{time.Now().Format("2006-01-02")},
-		"Reason":   []string{fake.WordsN(5)},
+		"Reason":   []string{"Some reason for test"},
 	}
 
 	res := abs.HTML("/absences/create").Post(form)
@@ -28,12 +27,12 @@ func (abs *AbsenceSuite) Test_Create_Absence() {
 func (abs *AbsenceSuite) Test_Validate_Absence_Date() {
 	abs.NoError(abs.DB.Create(&models.Absence{
 		Date: time.Now(),
-		Reason: fake.WordsN(5),
+		Reason: "Some reason for test",
 	}))
 	
 	form := url.Values{
 		"Date":   	[]string{time.Now().Format("2006-01-02")},
-		"Reason":   []string{fake.WordsN(5)},
+		"Reason":   []string{"Some reason for test"},
 	}
 
 	res := abs.HTML("/absences/create").Post(form)

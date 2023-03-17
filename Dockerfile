@@ -13,11 +13,8 @@ ENV PATH="$PATH:/root/.yarn/bin:/root/.config/yarn/global/node_modules"
 # Installing ox
 RUN go install github.com/wawandco/ox/cmd/ox@v0.11.2
 
-WORKDIR /kathenovino
+WORKDIR /kathenovivno
 ADD . .
-ADD go.mod .
-ADD go.sum .
-RUN go mod download -x
 
 # Building the application binary in bin/app 
 RUN ox build --static -o bin/app --tags timetzdata
@@ -28,8 +25,8 @@ RUN go build -o ./bin/cli -ldflags '-linkmode external -extldflags "-static"' ./
 FROM alpine
 
 # Binaries
-COPY --from=builder /kathenovino/bin/app /bin/
-COPY --from=builder /kathenovino/bin/cli /bin/
+COPY --from=builder /kathenovivno/bin/app /bin/
+COPY --from=builder /kathenovivno/bin/cli /bin/
 
 # For migrations use 
 # CMD cli db migrate up; app 
