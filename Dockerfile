@@ -15,6 +15,9 @@ RUN go install github.com/wawandco/ox/cmd/ox@v0.11.2
 
 WORKDIR /kathenovino
 ADD . .
+ADD go.mod .
+ADD go.sum .
+RUN go mod download -x
 
 # Building the application binary in bin/app 
 RUN ox build --static -o bin/app --tags timetzdata
