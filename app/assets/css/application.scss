@@ -1,0 +1,111 @@
+@import "~bootstrap/scss/bootstrap.scss";
+
+// This is just some CSS for the welcome home landing page, feel free to
+// remove it.
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: url("/assets/images/bg.png") no-repeat;
+  background-size: cover;
+  font-family: "Lemon/Milk", sans-serif;
+  font-family: "Lemon/Milk light", sans-serif;
+}
+
+h1 {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 32px;
+
+  color: #f8f7f9;
+}
+
+.total-title {
+  font-style: italic;
+  font-size: 40px;
+}
+
+.form-control, .form-control:focus  {
+  font-family: Helvetica;
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 5px 16px;
+  gap: 10px;
+  color: white !important;
+  font-size: 19px;
+
+  width: 190px;
+  height: 55px;
+
+  border: 2px solid #f8f7f9;
+  border-radius: 8px;
+
+  font-weight: 400;
+  line-height: 23px;
+
+  outline: none !important;
+  font-weight: 300;
+
+  &.reason {
+    width: 334px;
+  }
+}
+
+.form-control::placeholder{
+  color: rgb(209, 209, 209) !important;
+}
+
+button {
+  text-align: center;
+  padding: 16px 32px;
+  letter-spacing: 1px;
+
+  width: 159px;
+  height: 55px;
+
+  background: #f8f7f9;
+  border-radius: 8px;
+  border: 0;
+
+  font-style: italic;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 23px;
+
+  color: #8000ff;
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+p {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 45px;
+  text-align: center;
+
+  color: #ffffff;
+}
+
+.invalid-feedback{
+  color: #fff;
+  font-size: 15px;
+  font-family: Helvetica;
+  font-weight: 300;
+  margin-left: 5px;
+}
+
+.was-validated .form-control:invalid, .form-control.is-invalid{
+  padding: 5px 16px;
+  
+  &[type="date"]{
+    background-image: none;
+  }
+}

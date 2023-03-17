@@ -1,0 +1,21 @@
+<nav class="px-5 mx-5 py-5 mb-5">
+  <h1>Kathe no vino</h1>
+</nav>
+<div class="landing h-full">
+  <div class="d-flex flex-column justify-content-center align-items-center">
+    <img class="mb-4" src="/assets/images/landing-image.png" alt="" />
+    <h2 class="total-title text-white mb-4">
+      Recaudo a la fecha: <%= formatCurrency(total) %>
+    </h2>
+    <%= form_for(absence, {action: absencesCreatePath(), class: "d-flex mb-4", method: "POST"}) { %> 
+      <%= f.InputTag("Date", {hide_label: true, class: "me-3", type: "date"}) %>
+      <%= f.InputTag("Reason", {hide_label: true, class: "reason me-3", type: "text", placeholder: "Razón de la ausencia"}) %>
+
+      <button type="submit">Registrar</button>
+    <% } %>
+
+    <%= if (isPaymentDay()) { %>
+      <p class="text-white">Hoy es día de pago!</p>
+    <% } %>
+  </div>
+</div>
