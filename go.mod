@@ -18,9 +18,6 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/wawandco/ox v0.12.2
 	github.com/wawandco/oxpecker v1.5.6
-)
-
-require (
 	github.com/BurntSushi/toml v1.2.1 // indirect
 	github.com/Masterminds/semver/v3 v3.1.1 // indirect
 	github.com/aymerick/douceur v0.2.0 // indirect
