@@ -37,12 +37,14 @@ var Helpers = map[string]interface{}{
 	"isPaymentDay": func() bool {
 		today := time.Now()
 		tomorrow := today.Add(time.Hour * 24).Day()
+		tomorrowIsSunday := today.Day() == 14 && models.IsSunday(tomorrow)
 
-		if today.Day() == 15 || models.IsSunday(tomorrow) {
+		if today.Day() == 15 || tomorrowIsSunday {
 			return true
 		}
 
-		if today.Day() == now.EndOfMonth().Day() || models.IsSunday(tomorrow) {
+		tomorrowIsSunday = now.EndOfMonth().Day() -1 == today.Day() && models.IsSunday(tomorrow)
+		if today.Day() == now.EndOfMonth().Day() || tomorrowIsSunday {
 			return true
 		}
 
