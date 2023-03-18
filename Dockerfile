@@ -33,5 +33,6 @@ EXPOSE 3000
 
 # For migrations use 
 # CMD cli db migrate up; app 
+CMD cli db create; app
 CMD cli db migrate up; app
 
