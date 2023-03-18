@@ -7,7 +7,6 @@ import (
 
 	"kathenovino"
 	_ "kathenovino/app/models"
-	_ "kathenovino/app/tasks"
 
 	"github.com/wawandco/oxpecker/cli"
 	"github.com/wawandco/oxpecker/tools/soda"
