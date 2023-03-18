@@ -61,7 +61,6 @@ func CalculateSalary(tx *pop.Connection) (int, error) {
 	today := time.Now()
 	firstOfMonth := now.BeginningOfMonth()
 	absenceRangeStart := today
-	absenceRangeEnd := today
 	dailySalary, _ := strconv.Atoi(DailySalary)
 
 	if today.Day() <= 15 {
@@ -74,7 +73,6 @@ func CalculateSalary(tx *pop.Connection) (int, error) {
 		}
 
 		absenceRangeStart = firstOfMonth
-		absenceRangeEnd = time.Date(today.Year(), today.Month(), 15, 0, 0, 0, 0, today.Location())
 	}
 
 	if today.Day() > 15 && today.Day() <= 31 {
@@ -87,11 +85,10 @@ func CalculateSalary(tx *pop.Connection) (int, error) {
 		}
 
 		absenceRangeStart = time.Date(today.Year(), today.Month(), 16, 0, 0, 0, 0, today.Location())
-		absenceRangeEnd = now.EndOfMonth()
 	}
 
 	absences := Absences{}
-	if err := tx.Where("date >= ?", absenceRangeStart.Format("01-02-2006")).Where("date <= ?", absenceRangeEnd.Format("01-02-2006")).All(&absences); err != nil {
+	if err := tx.Where("date >= ?", absenceRangeStart.Format("01-02-2006")).Where("date <= ?", time.Now().Format("01-02-2006")).All(&absences); err != nil {
 		return 0, err
 	}
 
