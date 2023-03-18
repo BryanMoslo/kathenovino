@@ -18,7 +18,7 @@ var (
 	// Database middleware adds a `tx` context variable
 	// to every request, this tx variates to be a plain connection
 	// or a transaction based on the type of request.
-	Database = buffalotools.DatabaseMiddleware(models.DB(), nil)
+	Database = buffalotools.DatabaseMiddleware(models.DB, nil)
 
 	// ParameterLogger logs out parameters that the app received
 	// taking care of sensitive data.
