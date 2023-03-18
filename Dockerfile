@@ -27,6 +27,10 @@ FROM alpine
 # Binaries
 COPY --from=builder /kathenovivno/bin/app /bin/
 COPY --from=builder /kathenovivno/bin/cli /bin/
+COPY --from=builder /kathenovivno/bin/app/config/database.yml /bin/
+
+ENV ADDR=0.0.0.0
+EXPOSE 3000
 
 # For migrations use 
 # CMD cli db migrate up; app 
