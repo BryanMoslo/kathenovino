@@ -1,10 +1,10 @@
-FROM golang:1.16-alpine as builder
+FROM golang:1.18.3-alpine as builder
 
 ENV GO111MODULE on
 ENV GOPROXY https://proxy.golang.org/
 
 # Installing nodejs
-RUN apk add --update nodejs curl bash build-base python2
+RUN apk add --update nodejs curl bash build-base python3
 
 # Installing Yarn
 RUN curl -o- -L https://yarnpkg.com/install.sh | bash
