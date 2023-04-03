@@ -15,8 +15,24 @@
     <%= stylesheetTag("application.css") %> <%= javascriptTag("application.js",
     {defer: true}) %>
     <link href="https://fonts.cdnfonts.com/css/lemonmilk" rel="stylesheet" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;1,200&family=Roboto+Mono:wght@700&display=swap" rel="stylesheet">
   </head>
   <body class="h-full">
+    <header class="px-5 mx-5 py-5 mb-5 d-flex justify-content-between align-items-center">
+      <h1 class="m-0 p-0"><a class="text-white" href="<%= rootPath() %>">Kathe no vino</a></h1>
+
+      <nav>
+        <%= if (current_path == "/") { %>
+          <a href="<%= absencesPath() %>" class="text-white">Administracíon</a>
+        <% } else { %>
+          <a href="<%= rootPath() %>" class="text-white">Home</a>
+        <% } %>
+      </nav>
+    </header>
+
     <%= yield %>
   </body>
 </html>

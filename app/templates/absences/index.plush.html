@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="table-wrapper p-4 bg-white rounded-3 shadow">
+        <div>
+            <h4 class="m-0">Ausencias</h4>
+            <span class="fw-lighter text-secondary">Esta tabla lista todas las ausencias registradas de Kathe.</span>
+        </div>
+        <table class="container-fluid mt-4">
+            <thead>
+                <tr class="text-uppercase">
+                    <th class="p-3">Fecha</th>
+                    <th class="p-3">Razón</th>
+                    <th class="p-3"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <%= for (absence) in absences { %>
+                    <tr>
+                        <td class="p-3"><%= absence.Date.Format("02/Jan/2006") %></td>
+                        <td class="p-3"><%= absence.Reason %></td>
+                        <td class="p-3">
+                            <a href="<%= absenceDeletePath({id: absence.ID}) %>" data-method="DELETE" data-confirm="Estás seguro mi rey?" class="btn btn-sm btn-danger">Eliminar</a>
+                        </td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -17,7 +17,9 @@ func setRoutes(root *buffalo.App) {
 	root.Use(middleware.ParameterLogger)
 	root.Use(middleware.CSRF)
 
-	root.GET("/", absences.Index)
+	root.GET("/absences", absences.List)
+	root.GET("/", absences.New)
 	root.POST("/absences/create", absences.Create)
+	root.DELETE("/absences/{id}/delete", absences.Delete)
 	root.ServeFiles("/", http.FS(public.FS()))
 }

@@ -1,6 +1,3 @@
-<nav class="px-5 mx-5 py-5 mb-5">
-  <h1>Kathe no vino</h1>
-</nav>
 <div class="landing h-full">
   <div class="d-flex flex-column justify-content-center align-items-center">
     <img class="mb-4" src="/assets/images/landing-image.png" alt="" />
@@ -13,7 +10,17 @@
 
       <button type="submit">Registrar</button>
     <% } %>
-
+    
+    <%= for (k, messages) in flash { %>
+      <%= for (msg) in messages { %>
+        <div class="alert-dismissible">
+            <div class="container text-center text-white">
+              <%= raw(msg) %>
+            </div>
+        </div>
+      <% } %>
+    <% } %>
+    
     <%= if (isPaymentDay()) { %>
       <p class="text-white">Hoy es día de pago!</p>
     <% } %>

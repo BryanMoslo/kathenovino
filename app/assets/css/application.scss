@@ -7,6 +7,10 @@
   box-sizing: border-box;
 }
 
+a{
+  text-decoration: none;
+}
+
 body {
   background: url("/assets/images/bg.png") no-repeat;
   background-size: cover;
@@ -108,5 +112,17 @@ p {
   
   &[type="date"]{
     background-image: none;
+  }
+}
+
+.table-wrapper{
+  font-family: Montserrat;
+}
+
+table{
+  thead{
+    tr{
+      background: #F3F6F9;
+    }
   }
 }

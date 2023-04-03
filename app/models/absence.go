@@ -72,6 +72,11 @@ func CalculateSalary(tx *pop.Connection) (int, error) {
 			total += dailySalary
 		}
 
+		// This is to check that first day of the fortnight is not a Sunday from 1 to 15
+		if (IsSunday(firstOfMonth.Day())) {
+			firstOfMonth = firstOfMonth.Add(24 * time.Hour)
+		}
+
 		absenceRangeStart = firstOfMonth
 	}
 
@@ -83,8 +88,14 @@ func CalculateSalary(tx *pop.Connection) (int, error) {
 
 			total += dailySalary
 		}
+		
+		// This is to check that first day of the fortnight is not a Sunday from 16 to 30/31
+		absenceRangeStartDay := 16
+		if (IsSunday(16)) {
+			absenceRangeStartDay = 17
+		}
 
-		absenceRangeStart = time.Date(today.Year(), today.Month(), 16, 0, 0, 0, 0, today.Location())
+		absenceRangeStart = time.Date(today.Year(), today.Month(), absenceRangeStartDay, 0, 0, 0, 0, today.Location())
 	}
 
 	absences := Absences{}
