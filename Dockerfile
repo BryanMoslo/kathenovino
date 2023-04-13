@@ -1,37 +1,38 @@
-FROM golang:1.18.3-alpine as builder
+FROM golang:1.19.3 as builder
 
-ENV GO111MODULE on
-ENV GOPROXY https://proxy.golang.org/
-
-# Installing nodejs
-RUN apk add --update nodejs curl bash build-base python3
+# Installing nodejs and build-base
+RUN apt-get update
+RUN apt-get install -y nodejs npm curl bash build-essential git
 
 # Installing Yarn
-RUN curl -o- -L https://yarnpkg.com/install.sh | bash
+RUN curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.22.10
 ENV PATH="$PATH:/root/.yarn/bin:/root/.config/yarn/global/node_modules"
 
-# Installing ox
-RUN go install github.com/wawandco/ox/cmd/ox@v0.11.2
+# Installing ox from pre-built binary
+RUN wget https://github.com/wawandco/ox/releases/download/v0.13.1/ox_0.13.1_Linux_x86_64.tar.gz
+RUN tar -xzf ox_0.13.1_Linux_x86_64.tar.gz
+RUN mv ox /bin/ox
 
-WORKDIR /kathenovivno
+WORKDIR /kathenovino
 ADD . .
 
 # Building the application binary in bin/app 
-RUN ox build --static -o bin/app --tags timetzdata
+RUN ox build --static -o bin/app
 
 # Building bin/cli with the tooling
-RUN go build -o ./bin/cli -ldflags '-linkmode external -extldflags "-static"' ./cmd/ox 
+RUN go build -o ./bin/cli ./cmd/ox 
 
-FROM alpine
+FROM debian:latest
 
 # Binaries
-COPY --from=builder /kathenovivno/bin/app /bin/
-COPY --from=builder /kathenovivno/bin/cli /bin/
+COPY --from=builder /kathenovino/bin/app /bin/app
+COPY --from=builder /kathenovino/bin/cli /bin/cli
+
+# Binaries
+COPY --from=builder /kathenovino/bin/* /bin/
 
 ENV ADDR=0.0.0.0
 EXPOSE 3000
 
-# For migrations use 
-# CMD cli db migrate up; app 
-CMD cli db migrate up; app
-
+# For migrations use
+# CMD /bin/cli db migrate; /bin/app

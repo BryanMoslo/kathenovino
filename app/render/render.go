@@ -43,11 +43,16 @@ var Helpers = map[string]interface{}{
 			return true
 		}
 
-		tomorrowIsSunday = now.EndOfMonth().Day() -1 == today.Day() && models.IsSunday(tomorrow)
+		tomorrowIsSunday = now.EndOfMonth().Day()-1 == today.Day() && models.IsSunday(tomorrow)
 		if today.Day() == now.EndOfMonth().Day() || tomorrowIsSunday {
 			return true
 		}
 
 		return false
 	},
+
+	// "translate": func(value string) string {
+	// 	fmt.Println("===>", gotranslate.QuickTranslation("Hola",gotranslate.Spanish, gotranslate.EN))
+	// 	return gotranslate.QuickTranslation("Hello", gotranslate.EN, gotranslate.Spanish)
+	// },
 }

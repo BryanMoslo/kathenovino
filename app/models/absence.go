@@ -43,7 +43,7 @@ func (a Absence) String() string {
 func (ab *Absence) Validate(tx *pop.Connection) *validate.Errors {
 	return validate.Validate(
 		&validators.StringIsPresent{Field: ab.Reason, Name: "Reason", Message: "Hey, y la razón papi?"},
-		
+
 		&validators.FuncValidator{
 			Name:    "Date",
 			Message: "%v Esta fecha ya la agregaste",
@@ -73,7 +73,7 @@ func CalculateSalary(tx *pop.Connection) (int, error) {
 		}
 
 		// This is to check that first day of the fortnight is not a Sunday from 1 to 15
-		if (IsSunday(firstOfMonth.Day())) {
+		if IsSunday(firstOfMonth.Day()) {
 			firstOfMonth = firstOfMonth.Add(24 * time.Hour)
 		}
 
@@ -88,10 +88,10 @@ func CalculateSalary(tx *pop.Connection) (int, error) {
 
 			total += dailySalary
 		}
-		
+
 		// This is to check that first day of the fortnight is not a Sunday from 16 to 30/31
 		absenceRangeStartDay := 16
-		if (IsSunday(16)) {
+		if IsSunday(16) {
 			absenceRangeStartDay = 17
 		}
 
@@ -115,4 +115,50 @@ func IsSunday(monthDay int) bool {
 	loopDay := time.Date(currentYear, currentMonth, monthDay, 0, 0, 0, 0, currentLocation)
 
 	return loopDay.Weekday() == time.Sunday
+}
+
+func CurrentFortnightDetails(tx *pop.Connection) ([]time.Time, error) {
+	today := time.Now()
+	firstOfMonth := now.BeginningOfMonth()
+	workedDays := []time.Time{}
+
+	if today.Day() <= 15 {
+		for i := firstOfMonth.Day(); i <= today.Day(); i++ {
+			if IsSunday(i) {
+				continue
+			}
+
+			currentDay := time.Date(today.Year(), today.Month(), i, 0, 0, 0, 0, today.Location())
+			isAbsence, err := tx.Where("date = ?", currentDay.Format("01-02-2006")).Exists(&Absence{})
+
+			if err != nil {
+				return []time.Time{}, err
+			}
+
+			if !isAbsence {
+				workedDays = append(workedDays, currentDay)
+			}
+		}
+	}
+
+	if today.Day() > 15 && today.Day() <= 31 {
+		for i := 16; i <= today.Day(); i++ {
+			if IsSunday(i) {
+				continue
+			}
+
+			currentDay := time.Date(today.Year(), today.Month(), i, 0, 0, 0, 0, today.Location())
+			isAbsence, err := tx.Where("date = ?", currentDay.Format("01-02-2006")).Exists(&Absence{})
+
+			if err != nil {
+				return []time.Time{}, err
+			}
+
+			if !isAbsence {
+				workedDays = append(workedDays, currentDay)
+			}
+		}
+	}
+
+	return workedDays, nil
 }

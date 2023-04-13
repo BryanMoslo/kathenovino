@@ -1,9 +1,19 @@
 <div class="landing h-full">
   <div class="d-flex flex-column justify-content-center align-items-center">
     <img class="mb-4" src="/assets/images/landing-image.png" alt="" />
-    <h2 class="total-title text-white mb-4">
-      Recaudo a la fecha: <%= formatCurrency(total) %>
-    </h2>
+    <div class="accordion-item"">
+      <h2 class="total-title text-white mb-4">
+        Recaudo a la fecha: <%= formatCurrency(total) %> <i class="d-inline accordion-button bi bi-info-circle cursor-pointer" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"></i> 
+      </h2>
+      
+      <div id="collapseOne" class="accordion-collapse collapse card mb-3" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+        <ul class="card-body list-group list-group-flush">
+          <%= for (key, workedDay) in workedDays { %>
+            <li class="list-group-item"><%= workedDay.Format("Monday - 02/January/2006") %></li>
+          <% } %>
+        </ul>
+      </div>
+    </div>
     <%= form_for(absence, {action: absencesCreatePath(), class: "d-flex mb-4", method: "POST"}) { %> 
       <%= f.InputTag("Date", {hide_label: true, class: "me-3", type: "date"}) %>
       <%= f.InputTag("Reason", {hide_label: true, class: "reason me-3", type: "text", placeholder: "Razón de la ausencia"}) %>

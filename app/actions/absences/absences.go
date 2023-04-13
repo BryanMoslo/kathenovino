@@ -45,7 +45,14 @@ func New(c buffalo.Context) error {
 		return err
 	}
 
+	workedDays, err := models.CurrentFortnightDetails(tx)
+	if err != nil {
+		return err
+	}
+
 	c.Set("total", total)
+	c.Set("workedDays", workedDays)
+
 	c.Set("absence", models.Absence{
 		Date: time.Now(),
 	})
@@ -73,6 +80,12 @@ func Create(c buffalo.Context) error {
 			return errors.WithStack(errors.Wrap(err, "Error calculating salary"))
 		}
 
+		workedDays, err := models.CurrentFortnightDetails(tx)
+		if err != nil {
+			return err
+		}
+
+		c.Set("workedDays", workedDays)
 		c.Set("total", total)
 
 		return c.Render(http.StatusUnprocessableEntity, r.HTML("absences/new.plush.html"))
